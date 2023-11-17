@@ -116,12 +116,14 @@ pub fn build_huffman_tree(frequencies: &HashMap<char, usize>) -> Box<Node> {
         .map(|(c, count)| (Reverse(*count), Box::new(Node::Leaf(*c))))
         .collect();
 
-    while heap.len() != 1 {
-        let (s1, n1) = heap.pop().unwrap();
-        let (s2, n2) = heap.pop().unwrap();
-        heap.push((Reverse(s1.0 + s2.0), Box::new(Node::Internal([n1, n2]))));
+    while let Some((s1, n1)) = heap.pop() {
+        if let Some((s2, n2)) = heap.pop() {
+            heap.push((Reverse(s1.0 + s2.0), Box::new(Node::Internal([n1, n2]))));
+        } else {
+            return n1;
+        }
     }
-    heap.pop().unwrap().1
+    panic!("empty input");
 }
 
 /*
