@@ -1,8 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use std::{
-    cmp::Reverse,
-    collections::{BinaryHeap, HashMap},
+    collections::{HashMap},
     io::Write,
 };
 
