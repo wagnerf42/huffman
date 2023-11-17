@@ -1,5 +1,6 @@
-0) lancer `cargo run` pour tester le code
-
+0) lancer `cargo test` pour tester les differentes fonctions ;
+   `cargo test <nom_de_fonction>` permet de ne tester que la fonction en question.
+   Une fois toutes les fonctions implementees, `cargo run` permet de tester l'ensemble.
 
 1) fn scan_char_frequencies(input: &str) -> HashMap<char, usize>
 

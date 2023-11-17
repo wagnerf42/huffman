@@ -73,3 +73,6 @@ fn main() -> std::io::Result<()> {
     assert_eq!(&input, &decompressed_input);
     Ok(())
 }
+
+#[cfg(test)]
+mod test;
