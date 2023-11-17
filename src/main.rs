@@ -1,11 +1,11 @@
-use serde::{Deserialize, Serialize};
-
-use std::{
-    collections::{HashMap},
-    io::Write,
-};
-
 use bitvec::vec::BitVec;
+use serde::{Deserialize, Serialize};
+use std::{
+    collections::HashMap,
+    env::args,
+    fs::File,
+    io::{self, Write},
+};
 
 mod solution;
 
@@ -46,13 +46,13 @@ impl CompressedText {
         solution::decompress(&self.ctext, &self.htree)
     }
 
-    fn load(file_name: &str) -> std::io::Result<Self> {
+    fn load(file_name: &str) -> io::Result<Self> {
         let binary_soup = std::fs::read(file_name)?;
         Ok(bincode::deserialize(&binary_soup[..]).unwrap())
     }
 
-    fn save_as(&self, file_name: &str) -> std::io::Result<()> {
-        let mut writer = std::io::BufWriter::new(std::fs::File::create(file_name)?);
+    fn save_as(&self, file_name: &str) -> io::Result<()> {
+        let mut writer = io::BufWriter::new(File::create(file_name)?);
         let encoded: Vec<u8> = bincode::serialize(self).unwrap();
         writer.write_all(&encoded)?;
         Ok(())
@@ -63,14 +63,44 @@ fn compress_text(input: &str, codes: &HashMap<char, BitVec>) -> BitVec {
     solution::compress_text(input, codes)
 }
 
-fn main() -> std::io::Result<()> {
-    let input = "aabaabbcab".to_string();
-    // let input = std::fs::read_to_string("pg22048.txt")?;
+fn main() -> io::Result<()> {
+    let args: Vec<_> = args().collect();
+    match &args.get(1).map(String::as_str) {
+        Some("compress") => compress(&args[2..]),
+        Some("decompress") => decompress(&args[2..]),
+        _ => {
+            panic!("expect 1st argument 'compress' or 'decompress'");
+        }
+    }
+}
+
+fn compress(args: &[String]) -> io::Result<()> {
+    let [src, dest] = args else {
+        panic!("usage: compress <source_file> <destination_file>");
+    };
+    let input = std::fs::read_to_string(src)?;
     let ctext = CompressedText::new(&input);
-    ctext.save_as("test.ctxt")?;
-    let reloaded = CompressedText::load("test.ctxt")?;
+    ctext.save_as(dest)?;
+    let reloaded = CompressedText::load(dest)?;
     let decompressed_input = reloaded.decompress();
     assert_eq!(&input, &decompressed_input);
+    Ok(())
+}
+
+fn decompress(args: &[String]) -> io::Result<()> {
+    match args {
+        [src] => {
+            let ctext = CompressedText::load(src)?;
+            println!("{}", ctext.decompress());
+        }
+        [src, dest] => {
+            let ctext = CompressedText::load(src)?;
+            let output = ctext.decompress();
+            let mut writer = io::BufWriter::new(File::create(dest)?);
+            writer.write_all(output.as_bytes())?;
+        }
+        _ => panic!("usage: decompress <compressed_file> [destination_file]"),
+    }
     Ok(())
 }
 

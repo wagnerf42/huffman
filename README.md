@@ -1,6 +1,9 @@
 0) lancer `cargo test` pour tester les differentes fonctions ;
    `cargo test <nom_de_fonction>` permet de ne tester que la fonction en question.
-   Une fois toutes les fonctions implementees, `cargo run` permet de tester l'ensemble.
+
+   Une fois toutes les fonctions implementees, `cargo run` permet de tester l'ensemble:
+   * `cargo run compress <source_file> <destination_file>` pour compresser un fichier
+   * `cargo run decompress <compressed_file> [destination_file]` pour décompresser un fichier (affiche le résultat sur la sortie standard en l'absence de fichier destination)
 
 1) fn scan_char_frequencies(input: &str) -> HashMap<char, usize>
 
