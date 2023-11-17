@@ -53,6 +53,15 @@ fn test_decompress(ctext: &str, htree: &str, exp: &str) {
     assert_eq!(got, exp);
 }
 
+#[test]
+fn test_compressed_text_new() {
+    let ctext = crate::CompressedText::new("aabaabbcab");
+    let htree = str2tree("c b . a .");
+    assert_eq!(&*ctext.htree, &htree);
+    let bits = str2bitvec("110111010100101");
+    assert_eq!(ctext.ctext, bits);
+}
+
 //
 
 // Extract a pair (char, BitVec) from a string
