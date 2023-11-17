@@ -399,13 +399,12 @@ pub fn compress_text(input: &str, codes: &HashMap<char, BitVec>) -> BitVec {
 
 */
 
-pub fn decompress(ctext: &CompressedText) -> String {
+pub fn decompress(ctext: &BitVec, htree: &Node) -> String {
     ctext
-        .ctext
         .iter()
         .batching(|it| {
             match it
-                .fold_while(&*ctext.htree, |node, bit| {
+                .fold_while(htree, |node, bit| {
                     let next_node: &Node = match &node {
                         Node::Internal(children) => &children[*bit as usize],
                         _ => unreachable!(),

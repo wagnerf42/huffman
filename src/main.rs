@@ -1,8 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use std::{
-    cmp::Reverse,
-    collections::{BinaryHeap, HashMap},
+    collections::{HashMap},
     io::Write,
 };
 
@@ -44,7 +43,7 @@ impl CompressedText {
     }
 
     fn decompress(&self) -> String {
-        solution::decompress(self)
+        solution::decompress(&self.ctext, &self.htree)
     }
 
     fn load(file_name: &str) -> std::io::Result<Self> {

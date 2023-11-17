@@ -57,7 +57,7 @@ sa feuille. lorsque l'on part a droite on compte '1' et '0' lorsque l'on part a 
 dans notre exemple on a donc 'a' qui est code par '0', 'b' par '10' et 'c' par '11'.
 
 
-5) fn decompress(&self) -> String
+5) fn decompress(ctext: &BitVec, root: &Node) -> String
 
 La fonction la plus dure. Etant donne le code du texte et l'arbre, reconstruire le texte
 initial en parcourant l'arbre depuis la racine pour chaque caractere.
