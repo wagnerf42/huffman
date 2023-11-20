@@ -2,13 +2,13 @@ use bitvec::vec::BitVec;
 use std::collections::HashMap;
 use test_case::test_case;
 
-use crate::solution::*;
+use crate::{exercice::*, Node};
 
 #[test_case("foo", &[('f', 1), ('o', 2)]; "foo")]
 #[test_case("hello world", &[('h', 1), ('e', 1), ('l', 3), ('o', 2), (' ', 1), ('w', 1), ('r', 1), ('d', 1), ]; "hello world")]
 #[test_case("aabaabbcab", &[('a', 5), ('b', 4), ('c', 1), ]; "aabaabbcab")]
 fn test_scan_char_frequencies(txt: &str, exp: &[(char, usize)]) {
-    let got = scan_char_frequencies(txt);
+    let got = a__scan_char_frequencies(txt);
     let exp: HashMap<char, usize> = exp.iter().copied().collect();
     assert_eq!(&got, &exp);
 }
@@ -18,7 +18,7 @@ fn test_scan_char_frequencies(txt: &str, exp: &[(char, usize)]) {
 #[test_case("aabaabbcab", &["a 0", "b 10", "c 11"], "001000101011010"; "aabaabbcab")]
 fn test_compress_text(txt: &str, codes: &[&str], exp: &str) {
     let codes = codes.iter().map(str2cb).collect();
-    let got = compress_text(txt, &codes);
+    let got = b__compress_text(txt, &codes);
     let exp = str2bitvec(exp);
     assert_eq!(got, exp);
 }
@@ -27,7 +27,7 @@ fn test_compress_text(txt: &str, codes: &[&str], exp: &str) {
 #[test_case(&[('a', 5), ('b', 4), ('c', 1)], "c b . a ."; "aabaabbcab")]
 fn test_build_huffman_tree(freqs: &[(char, usize)], exp: &str) {
     let freqs = freqs.iter().copied().collect();
-    let got = *build_huffman_tree(&freqs);
+    let got = *c__build_huffman_tree(&freqs);
     let exp = str2tree(exp);
     assert_eq!(got, exp);
 }
@@ -37,7 +37,7 @@ fn test_build_huffman_tree(freqs: &[(char, usize)], exp: &str) {
 #[test_case("c b . a .", &["c 00", "b 01", "a 1"]; "aabaabbcab_2")]
 fn test_build_codes(htree: &str, exp: &[&str]) {
     let htree = &str2tree(htree);
-    let got = build_codes(htree);
+    let got = d__build_codes(htree);
     let exp = exp.iter().map(str2cb).collect();
     assert_eq!(got, exp);
 }
@@ -49,7 +49,7 @@ fn test_build_codes(htree: &str, exp: &[&str]) {
 fn test_decompress(ctext: &str, htree: &str, exp: &str) {
     let ctext = str2bitvec(ctext);
     let htree = str2tree(htree);
-    let got = decompress(&ctext, &htree);
+    let got = e__decompress(&ctext, &htree);
     assert_eq!(got, exp);
 }
 

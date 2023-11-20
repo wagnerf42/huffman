@@ -1,30 +1,44 @@
+//! # Exercice: Codage de Huffman en Rust
+//!
+//! Cet exercice est disponible ici: <https://github.com/wagnerf42/huffman/>.
+//!
+//! Lancer `cargo test` pour tester les différentes fonctions ;
+//! `cargo test <nom_de_fonction>` permet de ne tester que la fonction en question.
+//!
+//! `cargo run` permet de tester l'ensemble:
+//! * `cargo run compress <source_file> <destination_file>` pour compresser un fichier
+//! * `cargo run decompress <compressed_file> [destination_file]` pour décompresser un fichier
+//!   (affiche le résultat sur la sortie standard en l'absence de fichier destination)
+//!
+//! ## Votre travail
+//!
+//! Implémenter, dans l'ordre où elle sont données,
+//! toutes les fonctions spécifiées dans le [src/exercice.rs](exercice).
+//!
+//! ## Références
+//!
+//! [Codage de Huffman sur Wikipedia](https://fr.wikipedia.org/wiki/Codage_de_Huffman)
+
 use bitvec::vec::BitVec;
 use serde::{Deserialize, Serialize};
 use std::{
-    collections::HashMap,
     env::args,
     fs::File,
     io::{self, Write},
 };
 
+pub mod exercice;
 mod solution;
 
-fn scan_char_frequencies(input: &str) -> HashMap<char, usize> {
-    solution::scan_char_frequencies(input)
-}
-
+/// Un nœud de l'arbre de Huffman.
+///
+/// Peut être une [feuille](Node::Leaf) ou un [nœud interne](Node::Internal).
 #[derive(Serialize, Deserialize, Debug, PartialOrd, Eq, PartialEq, Ord)]
 pub enum Node {
+    /// Une feuille de l'arbre de Huffman
     Leaf(char),
+    /// Un nœud interne de l'arbre de Huffman, possédant deux nœuds enfants.
     Internal([Box<Node>; 2]),
-}
-
-fn build_huffman_tree(frequencies: &HashMap<char, usize>) -> Box<Node> {
-    solution::build_huffman_tree(frequencies)
-}
-
-fn build_codes(root: &Node) -> HashMap<char, BitVec> {
-    solution::build_codes(root)
 }
 
 #[derive(Serialize, Deserialize)]
@@ -35,15 +49,15 @@ pub struct CompressedText {
 
 impl CompressedText {
     fn new(input: &str) -> Self {
-        let frequencies = scan_char_frequencies(input);
-        let htree = build_huffman_tree(&frequencies);
-        let codes = build_codes(&htree);
-        let ctext = compress_text(input, &codes);
+        let frequencies = exercice::a__scan_char_frequencies(input);
+        let htree = exercice::c__build_huffman_tree(&frequencies);
+        let codes = exercice::d__build_codes(&htree);
+        let ctext = exercice::b__compress_text(input, &codes);
         CompressedText { htree, ctext }
     }
 
     fn decompress(&self) -> String {
-        solution::decompress(&self.ctext, &self.htree)
+        exercice::e__decompress(&self.ctext, &self.htree)
     }
 
     fn load(file_name: &str) -> io::Result<Self> {
@@ -57,10 +71,6 @@ impl CompressedText {
         writer.write_all(&encoded)?;
         Ok(())
     }
-}
-
-fn compress_text(input: &str, codes: &HashMap<char, BitVec>) -> BitVec {
-    solution::compress_text(input, codes)
 }
 
 fn main() -> io::Result<()> {
