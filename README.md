@@ -1,5 +1,9 @@
-0) lancer `cargo run` pour tester le code
+0) lancer `cargo test` pour tester les differentes fonctions ;
+   `cargo test <nom_de_fonction>` permet de ne tester que la fonction en question.
 
+   Une fois toutes les fonctions implementees, `cargo run` permet de tester l'ensemble:
+   * `cargo run compress <source_file> <destination_file>` pour compresser un fichier
+   * `cargo run decompress <compressed_file> [destination_file]` pour décompresser un fichier (affiche le résultat sur la sortie standard en l'absence de fichier destination)
 
 1) fn scan_char_frequencies(input: &str) -> HashMap<char, usize>
 
@@ -41,11 +45,11 @@ lorsque le tas atteint une taille de 1, alors, il contient la racine de l'arbre.
 dans notre exemple on obtient l'arbre suivant :
 
 ```
-            /\
-           /  \
-          a   /\
-             /  \
-            b    c
+         /\
+        /  \
+       /\   a
+      /  \
+     c    b
 ```
 
 
@@ -54,7 +58,7 @@ dans notre exemple on obtient l'arbre suivant :
 Pour trouver le code d'un caractere il suffit de regarder le chemin de la racine jusqu'a
 sa feuille. lorsque l'on part a droite on compte '1' et '0' lorsque l'on part a gauche.
 
-dans notre exemple on a donc 'a' qui est code par '0', 'b' par '10' et 'c' par '11'.
+dans notre exemple on a donc 'a' qui est code par '1', 'b' par '01' et 'c' par '00'.
 
 
 5) fn decompress(ctext: &BitVec, root: &Node) -> String
