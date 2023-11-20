@@ -1,3 +1,6 @@
+//! Contient les solutions.
+#![allow(non_snake_case)]
+
 use std::{
     cmp::Reverse,
     collections::{BinaryHeap, HashMap},
@@ -11,7 +14,99 @@ use itertools::{
 
 pub use crate::{CompressedText, Node};
 
-pub fn scan_char_frequencies(input: &str) -> HashMap<char, usize> {
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+pub(crate) fn a__scan_char_frequencies(input: &str) -> HashMap<char, usize> {
     input.chars().fold(HashMap::new(), |mut h, c| {
         *h.entry(c).or_default() += 1;
         h
@@ -110,7 +205,7 @@ pub fn scan_char_frequencies(input: &str) -> HashMap<char, usize> {
 
 */
 
-pub fn build_huffman_tree(frequencies: &HashMap<char, usize>) -> Box<Node> {
+pub(crate) fn c__build_huffman_tree(frequencies: &HashMap<char, usize>) -> Box<Node> {
     let mut heap: BinaryHeap<(Reverse<usize>, Box<Node>)> = frequencies
         .iter()
         .map(|(c, count)| (Reverse(*count), Box::new(Node::Leaf(*c))))
@@ -205,7 +300,7 @@ pub fn build_huffman_tree(frequencies: &HashMap<char, usize>) -> Box<Node> {
 
 */
 
-pub fn build_codes(root: &Node) -> HashMap<char, BitVec> {
+pub(crate) fn d__build_codes(root: &Node) -> HashMap<char, BitVec> {
     let mut codes = HashMap::new();
     fn build_codes_recursively(
         root: &Node,
@@ -301,7 +396,7 @@ pub fn build_codes(root: &Node) -> HashMap<char, BitVec> {
 
 */
 
-pub fn compress_text(input: &str, codes: &HashMap<char, BitVec>) -> BitVec {
+pub(crate) fn b__compress_text(input: &str, codes: &HashMap<char, BitVec>) -> BitVec {
     input.chars().flat_map(|c| &codes[&c]).collect()
 }
 
@@ -401,7 +496,7 @@ pub fn compress_text(input: &str, codes: &HashMap<char, BitVec>) -> BitVec {
 
 */
 
-pub fn decompress(ctext: &BitVec, htree: &Node) -> String {
+pub(crate) fn e__decompress(ctext: &BitVec, htree: &Node) -> String {
     ctext
         .iter()
         .batching(|it| {
