@@ -6,7 +6,7 @@ ecrire les prototypes de fonctions.
 
 0) utiliser `cargo new` pour creer un nouveau projet
 
-1) utiliser `cargo run` pour laisser le code du hello world qui a ete genere
+1) utiliser `cargo run` pour lancer le code du hello world qui a ete genere
 
 2) ecrire une fonction `creation_vecteur_range` prenant deux arguments
   - un entier *e* de depart, non signe, de 32bits
@@ -18,7 +18,7 @@ ecrire les prototypes de fonctions.
   le vecteur contenant [3,4,5,6,7].
 
 3) testez votre fonction en creant un vecteur v1 de 10 elements, demarrant a 0
-a l'aide d'un `println`.
+puis en l'affichant a l'aide d'un `println`.
 
 4) ecrire une fonction `map` prenant en argument un vecteur d'entiers, et une fonction
 *f* sur les entiers. votre fonction devra remplacer chaque entier du vecteur par son image

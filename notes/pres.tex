@@ -1,0 +1,325 @@
+\begin{frame}[fragile]{Variables}
+\protect\hypertarget{variables}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{let}\NormalTok{ x }\OperatorTok{=} \DecValTok{3}\OperatorTok{;}
+    \KeywordTok{let}\NormalTok{ y}\OperatorTok{:} \DataTypeTok{u32} \OperatorTok{=} \DecValTok{4}\OperatorTok{;}
+    \KeywordTok{let} \KeywordTok{mut}\NormalTok{ z }\OperatorTok{=} \DecValTok{5}\OperatorTok{;}
+\NormalTok{    z }\OperatorTok{{-}=} \DecValTok{3}\OperatorTok{;}
+    \KeywordTok{let}\NormalTok{ x}\OperatorTok{:} \DataTypeTok{f64} \OperatorTok{=} \DecValTok{2.5}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  par défaut en lecture seule
+\item
+  tout est fortement typé
+\item
+  types de base : \emph{i8,u16,f32,i32},\ldots{}
+\item
+  \emph{usize} pour les tailles
+\item
+  inférence de type
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Fonctions}
+\protect\hypertarget{fonctions}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{fn}\NormalTok{ addition(x}\OperatorTok{:} \DataTypeTok{u32}\OperatorTok{,}\NormalTok{ y}\OperatorTok{:} \DataTypeTok{u32}\NormalTok{) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{u32} \OperatorTok{\{}
+\NormalTok{    x}\OperatorTok{+}\NormalTok{y}
+\OperatorTok{\}}
+
+\KeywordTok{let}\NormalTok{ a }\OperatorTok{=} \DecValTok{3}\OperatorTok{;}
+\NormalTok{addition(a}\OperatorTok{,} \DecValTok{4}\NormalTok{)}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  pas de fonction variadique
+\item
+  les fonctions guident l'inférence de type
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Affichage}
+\protect\hypertarget{affichage}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{fn}\NormalTok{ main() }\OperatorTok{\{}
+    \KeywordTok{let}\NormalTok{ w}\OperatorTok{:} \DataTypeTok{String} \OperatorTok{=} \StringTok{"world"}\OperatorTok{.}\NormalTok{to\_string()}\OperatorTok{;}
+    \PreprocessorTok{println!}\NormalTok{(}\StringTok{"hello \{\}"}\OperatorTok{,}\NormalTok{ w)}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  println!
+\item
+  placeholders
+
+  \begin{itemize}
+  \tightlist
+  \item
+    ``\{\}'' pour les types simples
+  \item
+    ``\{:?\}'' pour les types plus complexes
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Généricité}
+\protect\hypertarget{guxe9nuxe9ricituxe9}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let} \KeywordTok{mut}\NormalTok{ v1}\OperatorTok{:}\DataTypeTok{Vec}\OperatorTok{\textless{}}\DataTypeTok{u32}\OperatorTok{\textgreater{}} \OperatorTok{=} \DataTypeTok{Vec}\PreprocessorTok{::}\NormalTok{new()}\OperatorTok{;}
+\NormalTok{v1}\OperatorTok{.}\NormalTok{push(}\DecValTok{1}\NormalTok{)}\OperatorTok{;}
+\NormalTok{v1}\OperatorTok{.}\NormalTok{push(}\DecValTok{2}\NormalTok{)}\OperatorTok{;}
+\KeywordTok{let} \KeywordTok{mut}\NormalTok{ v2}\OperatorTok{:} \DataTypeTok{Vec}\OperatorTok{\textless{}}\DataTypeTok{f64}\OperatorTok{\textgreater{}} \OperatorTok{=} \DataTypeTok{Vec}\PreprocessorTok{::}\NormalTok{new()}\OperatorTok{;}
+\NormalTok{v2}\OperatorTok{.}\NormalTok{push(}\DecValTok{3.14}\NormalTok{)}\OperatorTok{;}
+
+\KeywordTok{fn}\NormalTok{ ajout}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{\textgreater{}}\NormalTok{(v}\OperatorTok{:} \DataTypeTok{Vec}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{\textgreater{},}\NormalTok{ e}\OperatorTok{:}\NormalTok{ T) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{Vec}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{\textgreater{};}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  types paramétrés par d'autres types
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Macros}
+\protect\hypertarget{macros}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{fn}\NormalTok{ main() }\OperatorTok{\{}
+    \PreprocessorTok{println!}\NormalTok{(}\StringTok{"hello"}\OperatorTok{,} \StringTok{"world"}\NormalTok{)}\OperatorTok{;}
+    \KeywordTok{let}\NormalTok{ v }\OperatorTok{=} \PreprocessorTok{vec!}\NormalTok{[}\DecValTok{1}\OperatorTok{,}\DecValTok{2}\OperatorTok{,}\DecValTok{3}\OperatorTok{,}\DecValTok{4}\NormalTok{]}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  regarder les \emph{!}
+\item
+  souvent pour remplacer des fonctions variadiques
+\item
+  beaucoup plus complexes que les macros C
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Conditionnelles}
+\protect\hypertarget{conditionnelles}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\%} \DecValTok{2} \OperatorTok{==} \DecValTok{0} \OperatorTok{\{}
+        \PreprocessorTok{println!}\NormalTok{(}\StringTok{"x est pair"}\NormalTok{)}\OperatorTok{;}
+    \OperatorTok{\}}
+    \KeywordTok{let}\NormalTok{ s }\OperatorTok{=} \ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\%} \DecValTok{2} \OperatorTok{==} \DecValTok{0} \OperatorTok{\{}\NormalTok{ x }\OperatorTok{/} \DecValTok{2} \OperatorTok{\}} \ControlFlowTok{else} \OperatorTok{\{}\NormalTok{ x}\OperatorTok{*}\DecValTok{3} \OperatorTok{+} \DecValTok{1} \OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Boucles For}
+\protect\hypertarget{boucles-for}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{let} \KeywordTok{mut}\NormalTok{ s }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}
+    \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \DecValTok{0}\OperatorTok{..}\DecValTok{10} \OperatorTok{\{}
+\NormalTok{        s }\OperatorTok{+=}\NormalTok{ x}\OperatorTok{;}
+    \OperatorTok{\}}
+    \PreprocessorTok{assert\_eq!}\NormalTok{(s}\OperatorTok{,} \DecValTok{9}\OperatorTok{*}\DecValTok{10}\OperatorTok{/}\DecValTok{2}\NormalTok{)}\OperatorTok{;}
+    \KeywordTok{let}\NormalTok{ v }\OperatorTok{=} \PreprocessorTok{vec!}\NormalTok{[}\DecValTok{1}\OperatorTok{,}\DecValTok{2}\OperatorTok{,}\DecValTok{3}\NormalTok{]}\OperatorTok{;}
+    \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \OperatorTok{\&}\NormalTok{v }\OperatorTok{\{}
+        \PreprocessorTok{println!}\NormalTok{(}\StringTok{"x vaut \{\}"}\OperatorTok{,}\NormalTok{ x)}\OperatorTok{;}
+    \OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Références}
+\protect\hypertarget{ruxe9fuxe9rences}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ x }\OperatorTok{=} \DataTypeTok{u32}\OperatorTok{;}
+\KeywordTok{let}\NormalTok{ r }\OperatorTok{=} \OperatorTok{\&}\NormalTok{x}\OperatorTok{;}
+\KeywordTok{let}\NormalTok{ x2 }\OperatorTok{=} \OperatorTok{*}\NormalTok{r}\OperatorTok{;}
+\KeywordTok{let} \KeywordTok{mut}\NormalTok{ y }\OperatorTok{=} \DecValTok{3.5}\OperatorTok{;}
+\KeywordTok{let}\NormalTok{ ry }\OperatorTok{=} \OperatorTok{\&}\KeywordTok{mut}\NormalTok{ y}\OperatorTok{;}
+\OperatorTok{*}\NormalTok{ry }\OperatorTok{=} \DecValTok{4.2}\OperatorTok{;}
+\PreprocessorTok{assert\_eq!}\NormalTok{(y}\OperatorTok{,} \DecValTok{4.2}\NormalTok{)}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  on distingue les références mutables ou non
+\item
+  utilisé pour le passage des arguments
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Tranches}
+\protect\hypertarget{tranches}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ v }\OperatorTok{=} \PreprocessorTok{vec!}\NormalTok{[}\DecValTok{0}\OperatorTok{,}\DecValTok{1}\OperatorTok{,}\DecValTok{2}\OperatorTok{,}\DecValTok{3}\OperatorTok{,}\DecValTok{4}\NormalTok{]}\OperatorTok{;}
+\KeywordTok{let}\NormalTok{ s }\OperatorTok{=} \OperatorTok{\&}\KeywordTok{mut}\NormalTok{ v[}\DecValTok{2}\OperatorTok{..}\DecValTok{4}\NormalTok{]}\OperatorTok{;}
+\NormalTok{s[}\DecValTok{0}\NormalTok{] }\OperatorTok{=} \DecValTok{3}\OperatorTok{;}
+\PreprocessorTok{assert\_eq!}\NormalTok{(v}\OperatorTok{,} \PreprocessorTok{vec!}\NormalTok{[}\DecValTok{0}\OperatorTok{,}\DecValTok{1}\OperatorTok{,}\DecValTok{3}\OperatorTok{,}\DecValTok{3}\OperatorTok{,}\DecValTok{4}\NormalTok{])}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  pointeur vers un bloc mémoire
+\item
+  bien mieux qu'en python
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Structures, Méthodes}
+\protect\hypertarget{structures-muxe9thodes}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{struct}\NormalTok{ Point }\OperatorTok{\{}
+\NormalTok{    x}\OperatorTok{:} \DataTypeTok{f64}\OperatorTok{,}
+\NormalTok{    y}\OperatorTok{:} \DataTypeTok{f64}\OperatorTok{,}
+\OperatorTok{\}}
+\KeywordTok{impl}\NormalTok{ Point }\OperatorTok{\{}
+    \KeywordTok{fn}\NormalTok{ est\_origine(}\OperatorTok{\&}\KeywordTok{self}\NormalTok{) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{bool} \OperatorTok{\{}
+        \KeywordTok{self}\OperatorTok{.}\NormalTok{x }\OperatorTok{==} \DecValTok{0} \OperatorTok{\&\&} \KeywordTok{self}\OperatorTok{.}\NormalTok{y }\OperatorTok{==} \DecValTok{0}
+    \OperatorTok{\}}
+    \KeywordTok{fn}\NormalTok{ changer\_y(}\OperatorTok{\&}\KeywordTok{mut} \KeywordTok{self}\OperatorTok{,}\NormalTok{ nouvel\_y}\OperatorTok{:} \DataTypeTok{f64}\NormalTok{) }\OperatorTok{\{}
+        \KeywordTok{self}\OperatorTok{.}\NormalTok{y }\OperatorTok{=}\NormalTok{ nouvel\_y}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\KeywordTok{let}\NormalTok{ p }\OperatorTok{=}\NormalTok{ Point }\OperatorTok{\{}\NormalTok{x}\OperatorTok{:} \DecValTok{0}\OperatorTok{.,}\NormalTok{ y}\OperatorTok{:} \DecValTok{0.54}\OperatorTok{\};} \PreprocessorTok{assert!}\NormalTok{(}\OperatorTok{!}\NormalTok{p}\OperatorTok{.}\NormalTok{est\_origine())}\OperatorTok{;}
+\NormalTok{p}\OperatorTok{.}\NormalTok{changer\_y(}\DecValTok{0}\OperatorTok{.}\NormalTok{)}\OperatorTok{;} \PreprocessorTok{assert!}\NormalTok{(p}\OperatorTok{.}\NormalTok{est\_origine())}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Types énumérés}
+\protect\hypertarget{types-uxe9numuxe9ruxe9s}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{enum}\NormalTok{ Couleur }\OperatorTok{\{}
+\NormalTok{    Incolore}\OperatorTok{,}
+\NormalTok{    Colore(}\DataTypeTok{u8}\OperatorTok{,} \DataTypeTok{u8}\OperatorTok{,} \DataTypeTok{u8}\NormalTok{)}\OperatorTok{,}
+\OperatorTok{\}}
+
+\KeywordTok{let}\NormalTok{ c }\OperatorTok{=} \PreprocessorTok{Couleur::}\NormalTok{Incolore}\OperatorTok{;}
+
+\ControlFlowTok{match}\NormalTok{ c }\OperatorTok{\{}
+    \PreprocessorTok{Couleur::}\NormalTok{Incolore }\OperatorTok{=\textgreater{}} \PreprocessorTok{println!}\NormalTok{(}\StringTok{"pas de couleur"}\NormalTok{)}\OperatorTok{,}
+    \PreprocessorTok{Couleur::}\NormalTok{Colore(}\DecValTok{0}\OperatorTok{,}\NormalTok{ \_}\OperatorTok{,}\NormalTok{ \_) }\OperatorTok{=\textgreater{}} \PreprocessorTok{println!}\NormalTok{(}\StringTok{"pas de rouge"}\NormalTok{)}\OperatorTok{,}
+    \PreprocessorTok{Couleur::}\NormalTok{Colore(r}\OperatorTok{,}\NormalTok{ \_}\OperatorTok{,}\NormalTok{ \_) }\OperatorTok{=\textgreater{}} \PreprocessorTok{println!}\NormalTok{(}\StringTok{"le rouge est \{\}"}\OperatorTok{,}\NormalTok{ r)}\OperatorTok{,}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  destructuré avec du pattern matching
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Options}
+\protect\hypertarget{options}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{enum} \DataTypeTok{Option}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+    \ConstantTok{None}\OperatorTok{,}
+    \ConstantTok{Some}\NormalTok{(T)}
+\OperatorTok{\}}
+\KeywordTok{let}\NormalTok{ o }\OperatorTok{=} \ConstantTok{Some}\NormalTok{(}\DecValTok{3u32}\NormalTok{)}\OperatorTok{;}
+\PreprocessorTok{println!}\NormalTok{(}\StringTok{"o vaut \{:?\}"}\OperatorTok{,}\NormalTok{ o)}\OperatorTok{;}
+\ControlFlowTok{if} \KeywordTok{let} \ConstantTok{Some}\NormalTok{(contenu) }\OperatorTok{=}\NormalTok{ o }\OperatorTok{\{}
+    \PreprocessorTok{println!}\NormalTok{(}\StringTok{"o n\textquotesingle{}est pas vide et contient \{\}"}\OperatorTok{,}\NormalTok{ contenu)}\OperatorTok{;}
+\OperatorTok{\}}
+\KeywordTok{let}\NormalTok{ contenu\_ou\_zero }\OperatorTok{=} \ControlFlowTok{match}\NormalTok{ o }\OperatorTok{\{}
+    \ConstantTok{None} \OperatorTok{=\textgreater{}} \DecValTok{0}\OperatorTok{,} 
+    \ConstantTok{Some}\NormalTok{(contenu) }\OperatorTok{=\textgreater{}}\NormalTok{ contenu}\OperatorTok{,}
+\OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  force à penser aux cas spéciaux
+\item
+  toujours du pattern matching
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Traits}
+\protect\hypertarget{traits}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{trait} \BuiltInTok{PartialEq} \OperatorTok{\{}
+    \KeywordTok{fn}\NormalTok{ eq(}\OperatorTok{\&}\KeywordTok{self}\OperatorTok{,}\NormalTok{ other}\OperatorTok{:} \OperatorTok{\&}\DataTypeTok{Self}\NormalTok{) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{bool}\OperatorTok{;}
+    \KeywordTok{fn}\NormalTok{ ne(}\OperatorTok{\&}\KeywordTok{self}\OperatorTok{,}\NormalTok{ other}\OperatorTok{:} \OperatorTok{\&}\DataTypeTok{Self}\NormalTok{) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{bool} \OperatorTok{\{}
+        \OperatorTok{!}\KeywordTok{self}\OperatorTok{.}\NormalTok{eq(other)}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\KeywordTok{fn}\NormalTok{ nb\_cibles}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{:} \BuiltInTok{PartialEq}\OperatorTok{\textgreater{}}\NormalTok{(s}\OperatorTok{:} \OperatorTok{\&}\NormalTok{[T]}\OperatorTok{,}\NormalTok{ cible}\OperatorTok{:} \OperatorTok{\&}\NormalTok{T) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{usize} \OperatorTok{\{}
+    \KeywordTok{let} \KeywordTok{mut}\NormalTok{ c }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}
+    \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ s }\OperatorTok{\{}
+        \ControlFlowTok{if}\NormalTok{ s }\OperatorTok{==}\NormalTok{ cible }\OperatorTok{\{}
+\NormalTok{            c }\OperatorTok{+=} \DecValTok{1}\OperatorTok{;}
+        \OperatorTok{\}}
+    \OperatorTok{\}}
+\NormalTok{    c}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  décrit une capacité d'un type
+\item
+  permet de contraindre les types abstraits
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Itérateurs}
+\protect\hypertarget{ituxe9rateurs}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{trait} \BuiltInTok{Iterator} \OperatorTok{\{}
+    \KeywordTok{type}\NormalTok{ Item}\OperatorTok{;}
+    \KeywordTok{fn}\NormalTok{ next(}\OperatorTok{\&}\KeywordTok{mut} \KeywordTok{self}\NormalTok{) }\OperatorTok{{-}\textgreater{}} \DataTypeTok{Option}\OperatorTok{\textless{}}\DataTypeTok{Self}\PreprocessorTok{::}\NormalTok{Item}\OperatorTok{\textgreater{};}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  deux traits, similaire à python
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \emph{IntoIterator} : itérable
+  \item
+    \emph{Iterator} : itérateur
+  \end{itemize}
+\end{itemize}
+\end{frame}
