@@ -217,3 +217,32 @@ trait Iterator {
 - deux traits, similaire à python
     - *IntoIterator* : itérable
     - *Iterator* : itérateur
+
+## Fonction lambda
+
+```rust
+values.into_iter()
+    .filter(|i| *i>0)
+    .for_each(|i| {
+        println!("{}", i);
+    });
+```
+
+- paramètres entre `|`...`|`
+- corps composé d'une simple expression
+  ou d'un bloc entre accolades
+
+## Fonctions en paramètres
+
+```rust
+fn<F: Fn(i32) -> i32> apply_n_times(f: F, n: usize, arg: i32) -> i32 {
+    if n == 0 {
+        arg
+    } else {
+        apply_n_times(f, n-1, f(arg))
+    }
+}
+```
+
+- générique sur le type de fonction (ici `F`)
+- `F` est contraint par le trait `Fn(...) -> ...`

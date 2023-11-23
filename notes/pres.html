@@ -113,6 +113,8 @@
 <li><a href="#/options">Options</a></li>
 <li><a href="#/traits">Traits</a></li>
 <li><a href="#/itérateurs">Itérateurs</a></li>
+<li><a href="#/fonction-lambda">Fonction lambda</a></li>
+<li><a href="#/fonctions-en-paramètres">Fonctions en paramètres</a></li>
 </ul>
 </nav>
 </section>
@@ -332,6 +334,36 @@ class="sourceCode rust"><code class="sourceCode rust"><span id="cb14-1"><a href=
 <li><em>IntoIterator</em> : itérable</li>
 <li><em>Iterator</em> : itérateur</li>
 </ul></li>
+</ul>
+</section>
+<section id="fonction-lambda" class="slide level2">
+<h2>Fonction lambda</h2>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode rust"><code class="sourceCode rust"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>values<span class="op">.</span>into_iter()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>filter(<span class="op">|</span>i<span class="op">|</span> <span class="op">*</span>i<span class="op">&gt;</span><span class="dv">0</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>for_each(<span class="op">|</span>i<span class="op">|</span> <span class="op">{</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> i)<span class="op">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span>)<span class="op">;</span></span></code></pre></div>
+<ul>
+<li>paramètres entre <code>|</code>…<code>|</code></li>
+<li>corps composé d’une simple expression ou d’un bloc entre
+accolades</li>
+</ul>
+</section>
+<section id="fonctions-en-paramètres" class="slide level2">
+<h2>Fonctions en paramètres</h2>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode rust"><code class="sourceCode rust"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span><span class="op">&lt;</span>F<span class="op">:</span> <span class="bu">Fn</span>(<span class="dt">i32</span>) <span class="op">-&gt;</span> <span class="dt">i32</span><span class="op">&gt;</span> apply_n_times(f<span class="op">:</span> F<span class="op">,</span> n<span class="op">:</span> <span class="dt">usize</span><span class="op">,</span> arg<span class="op">:</span> <span class="dt">i32</span>) <span class="op">-&gt;</span> <span class="dt">i32</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="dv">0</span> <span class="op">{</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        arg</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        apply_n_times(f<span class="op">,</span> n<span class="op">-</span><span class="dv">1</span><span class="op">,</span> f(arg))</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<ul>
+<li>générique sur le type de fonction (ici <code>F</code>)</li>
+<li><code>F</code> est contraint par le trait
+<code>Fn(...) -&gt; ...</code></li>
 </ul>
 </section>
     </div>
