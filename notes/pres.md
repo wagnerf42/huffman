@@ -27,7 +27,7 @@ fn addition(x: u32, y: u32) -> u32 {
 }
 
 let a = 3;
-addition(a, 4);
+let b = addition(a, 4);
 ```
 
 - pas de fonction variadique
