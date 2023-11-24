@@ -235,11 +235,12 @@ values.into_iter()
 ## Fonctions en paramètres
 
 ```rust
-fn<F: Fn(i32) -> i32> apply_n_times(f: F, n: usize, arg: i32) -> i32 {
+pub fn apply_n_times<F: FnMut(i32) -> i32> (mut f: F, n: usize, arg: i32) -> i32 {
     if n == 0 {
         arg
     } else {
-        apply_n_times(f, n-1, f(arg))
+        let farg = f(arg);
+        apply_n_times(f, n-1, farg)
     }
 }
 ```

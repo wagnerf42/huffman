@@ -353,13 +353,14 @@ accolades</li>
 <section id="fonctions-en-paramètres" class="slide level2">
 <h2>Fonctions en paramètres</h2>
 <div class="sourceCode" id="cb16"><pre
-class="sourceCode rust"><code class="sourceCode rust"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span><span class="op">&lt;</span>F<span class="op">:</span> <span class="bu">Fn</span>(<span class="dt">i32</span>) <span class="op">-&gt;</span> <span class="dt">i32</span><span class="op">&gt;</span> apply_n_times(f<span class="op">:</span> F<span class="op">,</span> n<span class="op">:</span> <span class="dt">usize</span><span class="op">,</span> arg<span class="op">:</span> <span class="dt">i32</span>) <span class="op">-&gt;</span> <span class="dt">i32</span> <span class="op">{</span></span>
+class="sourceCode rust"><code class="sourceCode rust"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">pub</span> <span class="kw">fn</span> apply_n_times<span class="op">&lt;</span>F<span class="op">:</span> <span class="bu">FnMut</span>(<span class="dt">i32</span>) <span class="op">-&gt;</span> <span class="dt">i32</span><span class="op">&gt;</span> (<span class="kw">mut</span> f<span class="op">:</span> F<span class="op">,</span> n<span class="op">:</span> <span class="dt">usize</span><span class="op">,</span> arg<span class="op">:</span> <span class="dt">i32</span>) <span class="op">-&gt;</span> <span class="dt">i32</span> <span class="op">{</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="dv">0</span> <span class="op">{</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        arg</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        apply_n_times(f<span class="op">,</span> n<span class="op">-</span><span class="dv">1</span><span class="op">,</span> f(arg))</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> farg <span class="op">=</span> f(arg)<span class="op">;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        apply_n_times(f<span class="op">,</span> n<span class="op">-</span><span class="dv">1</span><span class="op">,</span> farg)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <ul>
 <li>générique sur le type de fonction (ici <code>F</code>)</li>
 <li><code>F</code> est contraint par le trait
