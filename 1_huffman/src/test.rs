@@ -2,7 +2,7 @@ use bitvec::vec::BitVec;
 use std::collections::HashMap;
 use test_case::test_case;
 
-use crate::solution::*;
+use crate::*;
 
 #[test_case("foo", &[('f', 1), ('o', 2)]; "foo")]
 #[test_case("hello world", &[('h', 1), ('e', 1), ('l', 3), ('o', 2), (' ', 1), ('w', 1), ('r', 1), ('d', 1), ]; "hello world")]
@@ -49,7 +49,8 @@ fn test_build_codes(htree: &str, exp: &[&str]) {
 fn test_decompress(ctext: &str, htree: &str, exp: &str) {
     let ctext = str2bitvec(ctext);
     let htree = str2tree(htree);
-    let got = decompress(&ctext, &htree);
+    let ct = CompressedText{ ctext, htree: Box::new(htree) };
+    let got = ct.decompress();
     assert_eq!(got, exp);
 }
 
