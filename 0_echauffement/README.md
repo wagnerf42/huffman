@@ -18,21 +18,21 @@ ecrire les prototypes de fonctions.
    Par exemple creation_vecteur_range(3, 5) devra renvoyer
    le vecteur contenant [3,4,5,6,7].
 
-3) Tester votre fonction en creant un vecteur v1 de 10 elements, demarrant a 0
+3) Tester votre fonction en creant un vecteur *v1* de 10 elements, demarrant a 0
 puis en l'affichant a l'aide d'un `println`.
 
 4) Ecrire une fonction `map` prenant en argument un vecteur d'entiers, et une fonction
 *f* sur les entiers. votre fonction devra remplacer chaque entier du vecteur par son image
 a travers *f*.
 
-   Par exemple si *v* contient [0,1,2,3,4,5,6,8,9] apres l'appel a map sur v avec la fonction `|x| x+1`
+   Par exemple si *v* contient [0,1,2,3,4,5,6,8,9] apres l'appel a map sur *v* avec la fonction `|x| x+1`
    *v* contiendra alors [1,2,3,4,5,6,7,8,9,10].
 
    La fonction passee en argument etant generique, on utilisera le trait Fn(u32) -> u32 pour contraindre
    son type.
 
 5) Creez un second vecteur *v2* contenant les entiers de 1 a 10.
-  a l'aide de map, remplacez chaque entier *e* de *v* et de *v2*  par *e % 2*.
+  a l'aide de map, remplacez chaque entier *e* de *v1* et de *v2*  par *e % 2*.
   
 6) ecrire une fonction calculant le produit scalaire de 2 vecteurs
-  et verifiez que le produit scalaire de *v* par *v2* vaut bien 0.
+  et verifiez que le produit scalaire de *v1* par *v2* vaut bien 0.
